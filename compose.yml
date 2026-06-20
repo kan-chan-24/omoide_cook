@@ -14,6 +14,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
+    # DB作成とマイグレーションはすでに正常に存在する場合は、スキップされる
+    # docker compose upするたびに、railsサーバーを自動で立ち上げる
+    command: >
+      sh -c "bundle exec rails db:create db:migrate &&
+             bundle exec rails server -b 0.0.0.0"
     tty: true
     stdin_open: true
     volumes:
