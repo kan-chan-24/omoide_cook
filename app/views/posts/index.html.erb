@@ -1,2 +1,13 @@
 <h1>Posts#index</h1>
 <p>Find me in app/views/posts/index.html.erb</p>
+<div class="posts-container">
+  <% @posts.each do |post| %>
+    <div class="post-card">
+      <h2><%= post.title %></h2>
+      <p>投稿者: <%= post.user.name %></p>
+      <p>いつ頃の話:<%= post.when %></p>
+      <p>エピソード:<%= post.episode %></p>
+      <p>投稿日時:<%= post.updated_at %></p>
+    </div>
+  <% end %>
+</div>
