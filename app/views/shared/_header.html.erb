@@ -1,11 +1,10 @@
-<header class="bg-[#f7f5ed] py-4 px-6 md:px-12 flex justify-between items-center border-b border-gray-200/50">
-  <!-- 左端：アプリタイトル -->
-  <div>
-    <%= link_to "あの時食べたアレ", root_path, class: "font-serif text-xl md:text-2xl font-bold text-amber-900 tracking-wide hover:opacity-80 transition" %>
-  </div>
-  
-  <!-- 右端：投稿ボタン -->
-  <div>
-    <%= link_to "+ 書く", root_path, class: "font-serif bg-[#a63a2b] text-white text-sm font-semibold px-4 py-1.5 rounded shadow-sm hover:bg-[#8f3225] transition" %>
-  </div>
+<header class="bg-[#f7f5ed]/85 backdrop-blur-sm py-4 flex justify-between items-center border-b border-gray-500/25 sticky top-0 -mx-30 z-50">
+    <!-- 左端：アプリタイトル -->
+    <div class="pl-30">
+      <%= link_to "あの時食べたアレ", root_path, class: "font-serif text-xl md:text-2xl font-bold text-amber-900 tracking-wide hover:opacity-80 transition" %>
+    </div>
+    <!-- 右端：投稿ボタン -->
+    <div class="pr-30">
+      <%= link_to "+ 書く", root_path, class: "font-serif bg-[#a63a2b] text-white text-sm font-semibold px-5 py-2 rounded shadow-sm hover:bg-[#8f3225] transition" %>
+    </div>
 </header>
