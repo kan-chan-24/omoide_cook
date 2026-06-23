@@ -15,13 +15,11 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     # 前回の起動状態ファイル（server.pid）があれば削除
-    # DB作成とマイグレーションはすでに正常に存在する場合は、スキップされる
-    # docker compose upしたら、railsサーバーとcss監視を自動で立ち上げる
+    # DB作成とマイグレーションはすでに正常に存在する場合は、スキップされ、コンテナは待機状態に。
     command: >
       sh -c "rm -f tmp/pids/server.pid &&
-             bundle exec rails db:create db:migrate &&
-             bundle exec rails tailwindcss:watch & 
-             bundle exec rails server -b 0.0.0.0"
+             bundle exec rails db:create db:migrate && 
+             tail -f /dev/null"
     tty: true
     stdin_open: true
     volumes:
