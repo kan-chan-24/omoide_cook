@@ -1,3 +1,4 @@
+<!-- 投稿フォームのテンプレ -->
 <%= form_with model: post, id: "post-form" do |f| %>
     <div>
         <%= f.label :title, "この料理に名前をつけるなら" %>
@@ -10,6 +11,10 @@
     <div>
 	    <%= f.label :episode, "この料理で思い出すこと" %>
         <%= f.text_area :episode %>
+    </div>
+    <div>
+        <%= f.label :image, "料理の写真" %>
+        <%= f.file_field :image %>
     </div>
     <%= f.submit "投稿する" %>
 <% end %>
