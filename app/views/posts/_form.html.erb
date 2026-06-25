@@ -1,0 +1,15 @@
+<%= form_with model: post, id: "post-form" do |f| %>
+    <div>
+        <%= f.label :title, "この料理に名前をつけるなら" %>
+        <%= f.text_field :title %>
+    </div>
+    <div>
+	    <%= f.label :when, "この料理を食べた・食べていた のはいつ頃？" %>
+        <%= f.text_area :when %>
+    </div>
+    <div>
+	    <%= f.label :episode, "この料理で思い出すこと" %>
+        <%= f.text_area :episode %>
+    </div>
+    <%= f.submit "投稿する" %>
+<% end %>
