@@ -9,30 +9,7 @@
   <div class="pt-5 border-t border-gray-500/25">
     <!-- カードの配置 -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-3 ">
-      <% @posts.each do |post| %>
-      <!--カードのスタイル-->
-      <div class="bg-[#FAF6EE] border border-[#EBE3D3] shadow-sm overflow-hidden flex flex-col">
-        <!-- カード上部：画像部分 -->
-        <div class="relative aspect-video overflow-hidden">
-          <%= image_tag post.image, class: "brightness-95 w-full h-full object-cover" %>
-          <span class="absolute bottom-3 left-4 text-white font-serif-sub text-sm drop-shadow-xl">
-            <%= post.when %>
-          </span>
-        </div>
-        <!--カード下部：テキスト部分-->
-        <div class="px-4 py-3 flex-1 flex flex-col justify-between">
-          <!--タイトルと本文  -->
-          <div class="py-2">
-            <h2 class="text-[#2A1A0A] text-lg lg:text-xl font-bold tracking-wide"><%= post.title %></h2>
-            <p class="text-[#5C5346] text-xs md:text-sm lg:text-base tracking-wide leading-loose line-clamp-3"><%= post.episode %></p>
-          </div>
-          <!-- ユーザー名 -->
-          <div class="border-t border-gray-500/25 pt-4 pb-2 mt-auto">
-            <p class="text-[#5C5346] text-base tracking-wide">by <%= post.user.name %></p>
-          </div>
-        </div>
-      </div>
-      <% end %>
+      <%= render @posts %>
     </div>
   </div>
 </div>
