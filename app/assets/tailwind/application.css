@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+@theme {
+    /* font-serif クラスの中身を、日本語の標準明朝体に上書きします */
+    --font-serif: "Times New Roman", "Yu Mincho", "游明朝", "Hiragino Mincho ProN", "MS PMincho", serif;
+    --font-serif-sub: "YuKyo-Medium", "Yu Mincho", "游明朝", "UD DigiKyo", "Hiragino Mincho ProN", serif;
+}
