@@ -2,7 +2,9 @@ class PostsController < ApplicationController
   def index
     # 投稿一覧用：全てのpostsを取得
     @posts = Post.includes(:user).order(created_at: :desc)
-    # モーダルの投稿作成用に裏でpostオブジェクトを持たせる
+  end
+
+  def new
     @post = Post.new
   end
 

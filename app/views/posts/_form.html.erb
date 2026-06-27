@@ -1,5 +1,5 @@
 <!-- 投稿フォームのテンプレ -->
-<%= form_with model: post, id: "post-form" do |f| %>
+<%= form_with model: post do |f| %>
     <div>
         <%= f.label :title, "この料理に名前をつけるなら" %>
         <%= f.text_field :title %>

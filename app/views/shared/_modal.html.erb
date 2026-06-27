@@ -1,0 +1,16 @@
+<div id="modal" data-modal-target="container">
+  <!-- 背景 -->
+  <div data-modal-target="backdrop" data-action="click->modal#close">
+  </div>
+  <!-- モーダル本体 -->
+  <div data-modal-target="content">
+    <!-- 閉じるボタン -->
+    <button type="button" data-action="click->modal#close">
+      ×
+    </button>
+    <!-- フォーム -->
+    <%= turbo_frame_tag "post_form" do %>
+      <!-- 最初は空 -->
+    <% end %>
+  </div>
+</div>

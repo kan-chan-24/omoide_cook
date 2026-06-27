@@ -13,20 +13,4 @@
       <%= render @posts %>
     </div>
   </div>
-
-  <!-- 入力フォームのモーダル -->
-  <div id="modal" data-controller="modal" data-modal-target="container">
-    <!-- 背景の黒い部分 -->
-    <div data-modal-target="backdrop" data-action="click->modal#close">
-    </div>
-    <!-- コンテンツを表示する白枠 -->
-    <div data-modal-target="content">
-      <button data-action="click->modal#close">×</button>
-      
-      <%= turbo_frame_tag "post_form" do %>
-        <%= render "form", post: @post %>
-      <% end %>
-    </div>
-  </div>
-
 </div>
