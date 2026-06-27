@@ -1,11 +1,11 @@
-<div id="modal" data-modal-target="container">
+<div id="modal" data-modal-target="container" class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
   <!-- 背景 -->
-  <div data-modal-target="backdrop" data-action="click->modal#close">
+  <div data-modal-target="backdrop" data-action="click->modal#close" class="fixed inset-0 bg-[#3a2d28]/30 transition-opacity">
   </div>
   <!-- モーダル本体 -->
-  <div data-modal-target="content">
+  <div data-modal-target="content" class="relative w-full max-w-2xl transform overflow-hidden bg-[#fcfaf7] px-6 py-5 text-left shadow-xl transition-all z-10 mx-auto">
     <!-- 閉じるボタン -->
-    <button type="button" data-action="click->modal#close">
+    <button type="button" data-action="click->modal#close" class="absolute right-6 top-6 flex h-8 w-8 items-center justify-center rounded-full bg-[#ebdcd0] text-[#7a6a61] hover:bg-[#dfcfc3] transition-colors text-xl font-light">
       ×
     </button>
     <!-- フォーム -->

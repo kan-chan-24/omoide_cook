@@ -1,20 +1,70 @@
+<!-- ヘッダー部分 -->
+<div class="text-left mb-8">
+    <span class="inline-block text-xs border border-[#9b5134] text-[#9b5134] px-3 py-1 font-bold mb-4 transform -rotate-3 origin-center">
+        思い出を記録する
+    </span>
+    <h2 class="text-xl font-bold text-[#2c1d11]">
+        あの時食べたアレ、書いてみませんか？
+    </h2>
+</div>
+
+<!-- タブ切り替え部分 -->
+<div class="flex border-b border-[#e1d3c7] mb-6">
+    <button class="w-1/2 py-3 text-center bg-[#80351d] text-white font-medium text-sm flex items-center justify-center gap-1 rounded-t-sm">
+        <span class="inline-block w-5 h-5 rounded-full border border-white text-xs flex items-center justify-center">1</span> エピソード
+    </button>
+    <button class="w-1/2 py-3 text-center text-[#8e7e75] font-medium text-sm flex items-center justify-center gap-1">
+        <span class="inline-block w-5 h-5 rounded-full border border-[#8e7e75] text-xs flex items-center justify-center">2</span> レシピ（任意）
+    </button>
+</div>
+
+<!-- レシピ入力中/説明テキスト -->
+<%# <p class="text-xs text-[#a39489] mb-4">
+    レシピは任意です。覚えていなければスキップしていただいても大丈夫です。
+</p> %>
+
 <!-- 投稿フォームのテンプレ -->
-<%= form_with model: post do |f| %>
+<%= form_with model: post, class: "space-y-6" do |f| %>
+    <!-- 料理の名前 -->
     <div>
-        <%= f.label :title, "この料理に名前をつけるなら" %>
-        <%= f.text_field :title %>
+        <%= f.label :title, "この料理に名前をつけるなら", class: "block text-xs text-[#8e7e75] mb-2 font-medium" %>
+        <%= f.text_field :title,
+            placeholder: "例：おばあちゃんの肉じゃが、風邪の日のコンソメスープ",
+            class: "w-full p-3 bg-[#f2eae1] border-none text-[#4a3b32] text-sm placeholder-[#b1a296] focus:ring-1 focus:ring-[#80351d] focus:outline-none rounded-sm"  %>
     </div>
+    <!-- いつ頃か -->
     <div>
-	    <%= f.label :when, "この料理を食べた・食べていた のはいつ頃？" %>
-        <%= f.text_area :when %>
+	    <%= f.label :when, "この料理を食べた・食べていたのはいつ頃？", class: "block text-xs text-[#8e7e75] mb-2 font-medium" %>
+        <%= f.text_field :when,
+            placeholder: "例：子供の頃、新卒一年目の時",
+            class: "w-full p-3 bg-[#f2eae1] border-none text-[#4a3b32] text-sm placeholder-[#b1a296] focus:ring-1 focus:ring-[#80351d] focus:outline-none rounded-sm"  %>
     </div>
+    <!-- エピソード -->
     <div>
-	    <%= f.label :episode, "この料理で思い出すこと" %>
-        <%= f.text_area :episode %>
+	    <%= f.label :episode, "この料理で思い出すこと", class: "block text-xs text-[#8e7e75] mb-2 font-medium"  %>
+        <%= f.text_area :episode,
+            rows: 5,
+            placeholder: "その料理にまつわる思い出を、自由に書いてください。",
+            class: "w-full p-4 bg-[#f2eae1] border-none text-[#4a3b32] text-sm leading-relaxed placeholder-[#b1a296] focus:ring-1 focus:ring-[#80351d] focus:outline-none resize-none rounded-sm"  %>
     </div>
+    <!-- 画像選択 -->
     <div>
-        <%= f.label :image, "料理の写真" %>
-        <%= f.file_field :image %>
+        <%= f.label :image, "料理の写真", class: "block text-xs text-[#8e7e75] mb-2 font-medium" %>
+        <div class="relative flex items-center justify-center w-full p-4 bg-[#f2eae1] rounded-sm cursor-pointer hover:bg-[#ebdcd0] transition-colors group">
+            <%= f.file_field :image, 
+                id: "modal_file_input",
+                onchange: "document.getElementById('file_name_display').innerText = this.files[0] ? this.files[0].name : '画像を選択する'",
+                class: "absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" %>
+            <div class="text-center pointer-events-none">
+                <!-- 初期テキスト。選択されるとJavaScriptによってファイル名に書き換わります -->
+                <span id="file_name_display" class="text-sm text-[#8e7e75] group-hover:text-[#4a3b32] break-all px-4 block">
+                    画像を選択する
+                </span>
+            </div>
+        </div>
     </div>
-    <%= f.submit "投稿する" %>
+    <!-- 次へ/投稿ボタン -->
+    <div class="pt-2">
+        <%= f.submit "次へ →", class: "w-full py-4 text-center text-sm font-medium text-white bg-[#80351d] hover:bg-[#6d2b16] transition-colors rounded-sm cursor-pointer border-none" %>
+    </div>
 <% end %>
