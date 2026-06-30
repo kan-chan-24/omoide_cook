@@ -9,7 +9,7 @@
 </div>
 
 <!-- 投稿フォームのテンプレ -->
-<%= form_with model: post, class: "space-y-6", data: { controller: "post-form" } do |f| %>
+<%= form_with model: post, url: posts_path, id: "post_form", class: "space-y-6", data: { controller: "post-form" } do |f| %>
     <!-- タブ切り替え部分 -->
     <div class="flex border-b border-[#e1d3c7] mb-6">
         <!-- エピソードタブ -->
@@ -110,11 +110,11 @@
                 class="w-1/3 py-4 text-center text-sm font-medium text-[#8e7e75] bg-[#ebdcd0] hover:bg-[#dccbc0] transition-colors rounded-sm cursor-pointer border-none hidden">
             ← 戻る
         </button>
-        <button type="submit" 
-                data-post-form-target="submitBtn" 
-                data-action="click->post-form#handleNext" 
-                class="flex-1 py-4 text-center text-sm font-medium text-white bg-[#80351d] hover:bg-[#6d2b16] transition-colors rounded-sm cursor-pointer border-none">
-            次へ →
-        </button>
+        <%= f.submit "次へ →", 
+            data: {
+                post_form_target: "submitBtn", 
+                action: "click->post-form#handleNext" 
+            }, 
+            class: "flex-1 py-4 text-center text-sm font-medium text-white bg-[#80351d] hover:bg-[#6d2b16] transition-colors rounded-sm cursor-pointer border-none" %>
     </div>
 <% end %>

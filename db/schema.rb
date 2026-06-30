@@ -15,7 +15,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_06_21_062709) do
   enable_extension "plpgsql"
 
   create_table "posts", force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.bigint "user_id" # 一時的にuserIDのnull falseを削除（ログイン機能実装時に復活）
     t.string "title", null: false
     t.string "image"
     t.string "when", null: false

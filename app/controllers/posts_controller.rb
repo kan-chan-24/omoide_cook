@@ -11,6 +11,7 @@ class PostsController < ApplicationController
   def create
     # フォームから送られてきたデータを取得
     @post = Post.new(post_params)
+    @post.user_id = User.first.id  # 仮のユーザーID（ログイン処理実装時にcurrent_userに変更）
 
     # -- バリデーションOK --
     if @post.save
@@ -44,6 +45,6 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :when, :episode, :image)
+    params.require(:post).permit(:title, :when, :episode, :image, ingredients: [], steps: [])
   end
 end

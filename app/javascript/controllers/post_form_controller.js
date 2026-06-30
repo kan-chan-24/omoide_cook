@@ -23,7 +23,7 @@ export default class extends Controller {
         this.episodeContentTarget.classList.remove("hidden")
         this.recipeContentTarget.classList.add("hidden")
         this.backBtnTarget.classList.add("hidden")
-        this.submitBtnTarget.textContent = "次へ →"
+        this.submitBtnTarget.value = "次へ →"
 
         // タブボタンの見た目（エピソードをアクティブ、レシピを非アクティブに）
         this._setTabActive(this.episodeTabTarget, true)
@@ -36,7 +36,7 @@ export default class extends Controller {
         this.episodeContentTarget.classList.add("hidden")
         this.recipeContentTarget.classList.remove("hidden")
         this.backBtnTarget.classList.remove("hidden")
-        this.submitBtnTarget.textContent = "投稿する"
+        this.submitBtnTarget.value = "投稿する"
 
         // タブボタンの見た目（エピソードを非アクティブ、レシピをアクティブに）
         this._setTabActive(this.episodeTabTarget, false)
