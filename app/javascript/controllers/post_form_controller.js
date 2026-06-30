@@ -1,6 +1,9 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
+    // 親の modal コントローラーを outlet として登録する（これでmodal_controller.jsの関数も使える）
+    static outlets = ["modal"]
+
     // HTML側と紐付ける要素（ターゲット）の定義
     static targets = [
         "episodeTab", "recipeTab",
@@ -51,6 +54,12 @@ export default class extends Controller {
             this.showRecipe()
         }
         // レシピ画面にいる時は通常通りsubmit（送信）される
+        else {
+            // modal の close メソッドを呼び出す
+            if (this.hasModalOutlet) { // 念のため存在チェック
+                this.modalOutlet.close()
+            }
+        }
     }
 
     // ==========================================
