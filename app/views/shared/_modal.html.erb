@@ -8,9 +8,7 @@
     <button type="button" data-action="click->modal#close" class="absolute right-6 top-6 flex h-8 w-8 items-center justify-center rounded-full bg-[#ebdcd0] text-[#7a6a61] hover:bg-[#dfcfc3] transition-colors text-xl font-light">
       ×
     </button>
-    <!-- フォーム -->
-    <%= turbo_frame_tag "post_form" do %>
-      <!-- 最初は空 -->
-    <% end %>
+    <!-- モーダルのスタイルの内側で、事前に1回だけ読み込ませる -->
+    <%= turbo_frame_tag "post_form", src: new_post_path %>
   </div>
 </div>
