@@ -6,7 +6,11 @@
         <% if post.image.attached? %>
             <%= image_tag post.image, class: "brightness-95 w-full h-full object-cover" %>
         <% else %>
-            <p>画像はありません</p>
+            <!-- 料理名の文字数から、1〜3の数字を自動計算する（毎回同じ料理名なら同じ画像になる） -->
+            <% image_index = (post.title.hash % 3).abs + 1 %>
+            <% placeholder_filename = "food_sample#{image_index}.jpg" %>
+            
+            <%= image_tag placeholder_filename, class: "brightness-95 w-full h-full object-cover", alt: post.title %>
         <% end %>
         <span class="absolute bottom-3 left-4 text-white font-serif-sub text-sm drop-shadow-xl">
             <%= post.when %>
