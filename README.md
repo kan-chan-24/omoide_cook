@@ -139,9 +139,13 @@
 - エピソード作成のAIサポート機能
 
 ## 技術スタック
+- Docker
 - Ruby 3.2.2
 - Ruby on Rails 7.1.6
 - PostgleSQL 15
+- Hotwire（Stimulus + Turbo）
+- JavaScript
+- Tailwind CSS
 :
 
 ## 画面遷移図
