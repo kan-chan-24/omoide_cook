@@ -1,6 +1,9 @@
 class Post < ApplicationRecord
   belongs_to :user, optional: true  # ← optional: true を追加（ログイン実装時に外す）
 
+  # Active StorageとPostモデルを紐付け
+  has_one_attached :image
+
   # 配列を JSON 形式で保存
   serialize :ingredients, type: Array, coder: JSON
   serialize :steps, type: Array, coder: JSON
