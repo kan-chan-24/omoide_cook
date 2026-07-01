@@ -9,24 +9,8 @@
   <!-- 投稿一覧 -->
   <div class="pt-5 border-t border-gray-500/25">
     <!-- カードの配置 -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-3 ">
+    <div id="posts" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-3 ">
       <%= render @posts %>
     </div>
   </div>
-
-  <!-- 入力フォームのモーダル -->
-  <div id="modal" data-controller="modal" data-modal-target="container">
-    <!-- 背景の黒い部分 -->
-    <div data-modal-target="backdrop" data-action="click->modal#close">
-    </div>
-    <!-- コンテンツを表示する白枠 -->
-    <div data-modal-target="content">
-      <button data-action="click->modal#close">×</button>
-      
-      <%= turbo_frame_tag "post_form" do %>
-        <%= render "form", post: @post %>
-      <% end %>
-    </div>
-  </div>
-
 </div>

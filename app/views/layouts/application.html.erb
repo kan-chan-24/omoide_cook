@@ -8,28 +8,20 @@
 
     <!-- Tailswind.cssとApplication.cssを読み込み -->
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-[#F5F2E9] font-serif">
+  <body class="bg-[#F5F2E9] font-serif" data-controller="modal" id="global-modal">
     <!-- ヘッダー -->
     <%= render 'shared/header' %>
     
     <main class="flex-1 pt-10 pb-10">
-      <!-- フラッシュメッセージの表示 -->
-      <% if flash[:notice] %>
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-          <%= flash[:notice] %>
-        </div>
-      <% end %>
-      <% if flash[:alert] %>
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-          <%= flash[:alert] %>
-        </div>
-      <% end %>
       <!-- 本文 -->
       <%= yield %>
     </main>
+    <!-- モーダルを読み込む（全ページで使える） -->
+    <%= render "shared/modal" %>
+
     <!-- フッター -->
     <%= render 'shared/footer' %>
   </body>

@@ -1,0 +1,15 @@
+ja:
+  errors:
+    format: "%{message}" # デフォルトの「Titleを入力してください」の「Title」を表示させない設定
+    messages:
+      blank: "入力してください"
+      too_long: "%{count}文字以内で入力してください"
+  
+  activerecord:
+    attributes:
+      post:
+        title: "タイトル"
+        when: "時期"
+        episode: "エピソード"
+        ingredients: "材料"
+        steps: "作り方"

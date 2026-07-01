@@ -6,7 +6,12 @@
       </div>
       <!-- 右端：投稿ボタン -->
       <div>
-        <%= link_to "+ 書く", root_path, class: "bg-[#8C3B2B] text-white text-sm font-semibold px-3 md:px-5 py-2 rounded shadow-sm hover:bg-[#8f3225] transition" %>
+        <%= button_tag "+ 書く", 
+          type: "button", 
+          data: { 
+            action: "click->modal#open"  # ← モーダルを開く
+          },
+          class: "bg-[#8C3B2B] text-white text-sm font-semibold px-3 md:px-5 py-2 rounded shadow-sm hover:bg-[#7d3a3d] transition" %>
       </div>
     </div>
 </header>
