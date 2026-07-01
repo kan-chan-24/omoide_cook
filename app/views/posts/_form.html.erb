@@ -72,7 +72,7 @@
             </div>
         </div>
         <!-- エピソード入力欄（全体をdivで囲み、カウンター用のコントローラーを指定します） -->
-        <div class="space-y-2" data-controller="episode-counter">
+        <div class="space-y-2" data-controller="episode-counter" data-episode-counter-max-length-value="<%= Post::MAX_EPISODE_LENGTH %>">
             
             <!-- ラベルとインラインエラー表示 -->
             <div class="flex items-baseline justify-between pr-2 md:pr-5 mb-2">
@@ -99,7 +99,7 @@
 
             <!-- 文字数カウントの数字表示（右寄せ） -->
             <div class="text-right text-xs text-[#8e7e75]">
-                <span data-episode-counter-target="count" class="font-medium">0</span> / 600文字
+                <span data-episode-counter-target="count" class="font-medium">0</span> / <%= Post::MAX_EPISODE_LENGTH %>文字
             </div>
         </div>
     </div>

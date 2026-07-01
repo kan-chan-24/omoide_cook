@@ -9,10 +9,11 @@ class Post < ApplicationRecord
   serialize :steps, type: Array, coder: JSON
 
   # 料理名：空欄NG 外部キー（user）：空欄NG いつ頃：空欄NG エピソード：空欄NG：文字数制限
+  MAX_EPISODE_LENGTH = 400
   validates :title, presence: true, length: { maximum: 20 }
   validates :user_id, presence: true
   validates :when, presence: true, length: { maximum: 20 }
-  validates :episode, presence: true, length: { maximum: 600 }
+  validates :episode, presence: true, length: { maximum: MAX_EPISODE_LENGTH }
 
   # 配列の要素ごとの文字数制限（カスタムバリデーション）
   validate :validate_ingredients_element_length
