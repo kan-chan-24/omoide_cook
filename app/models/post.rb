@@ -12,7 +12,7 @@ class Post < ApplicationRecord
   validates :title, presence: true, length: { maximum: 20 }
   validates :user_id, presence: true
   validates :when, presence: true, length: { maximum: 20 }
-  validates :episode, presence: true, length: { maximum: 800 }
+  validates :episode, presence: true, length: { maximum: 600 }
 
   # 配列の要素ごとの文字数制限（カスタムバリデーション）
   validate :validate_ingredients_element_length

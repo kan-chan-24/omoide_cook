@@ -56,20 +56,6 @@
                 placeholder: "例：子供の頃、新卒一年目の時",
                 class: "w-full p-3 bg-[#f2eae1] border-none text-[#4a3b32] text-sm placeholder-[#b1a296] focus:ring-1 focus:ring-[#80351d] focus:outline-none rounded-sm"  %>
         </div>
-        <!-- エピソード -->
-        <div>
-            <div class="flex items-baseline justify-between pr-2 md:pr-5 mb-2">
-                <%= f.label :episode, "この料理で思い出すこと", class: "block text-xs text-[#8e7e75] mb-2 font-medium"  %>
-                <!-- エラー表示 -->
-                <% if post.errors[:episode].any? %>
-                    <span class="text-[#dc143c] text-[11px] font-semibold"><%= post.errors[:episode].join("、") %></span>
-                <% end %>
-            </div>
-            <%= f.text_area :episode,
-                rows: 5,
-                placeholder: "その料理にまつわる思い出を、自由に書いてください。",
-                class: "w-full p-4 bg-[#f2eae1] border-none text-[#4a3b32] text-sm leading-relaxed placeholder-[#b1a296] focus:ring-1 focus:ring-[#80351d] focus:outline-none resize-none rounded-sm"  %>
-        </div>
         <!-- 画像選択 -->
         <div>
             <%= f.label :image, "料理の写真", for: "modal_file_input", class: "block text-xs text-[#8e7e75] mb-2 font-medium" %>
@@ -83,6 +69,37 @@
                         画像を選択する
                     </span>
                 </div>
+            </div>
+        </div>
+        <!-- エピソード入力欄（全体をdivで囲み、カウンター用のコントローラーを指定します） -->
+        <div class="space-y-2" data-controller="episode-counter">
+            
+            <!-- ラベルとインラインエラー表示 -->
+            <div class="flex items-baseline justify-between pr-2 md:pr-5 mb-2">
+                <%= f.label :episode, "この料理で思い出すこと", class: "block text-xs text-[#8e7e75] mb-2 font-medium"  %>
+                <% if post.errors[:episode].any? %>
+                    <span class="text-[#dc143c] text-[11px] font-semibold"><%= post.errors[:episode].join("、") %></span>
+                <% end %>
+            </div>
+            
+            <!-- 入力欄（文字が入力される「input」イベント時に、JSの「update」関数を動かす設定） -->
+            <%= f.text_area :episode,
+                rows: 6,
+                placeholder: "その料理にまつわる思い出を、自由に書いてください。",
+                data: {
+                    episode_counter_target: "input",
+                    action: "input->episode-counter#update"
+                }, 
+                class: "w-full p-4 bg-[#f2eae1] border-none text-[#4a3b32] text-sm leading-relaxed placeholder-[#b1a296] focus:ring-1 focus:ring-[#80351d] focus:outline-none resize-none rounded-sm"  %>
+            
+            <!-- 進捗バー（メーター） -->
+            <div class="w-full h-1 bg-gray-200 rounded-full overflow-hidden">
+                <div data-episode-counter-target="progressBar" class="h-full bg-[#80351d] transition-all duration-150" style="width: 0%;"></div>
+            </div>
+
+            <!-- 文字数カウントの数字表示（右寄せ） -->
+            <div class="text-right text-xs text-[#8e7e75]">
+                <span data-episode-counter-target="count" class="font-medium">0</span> / 600文字
             </div>
         </div>
     </div>
