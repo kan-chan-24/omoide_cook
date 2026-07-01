@@ -32,21 +32,39 @@
     <div data-post-form-target="episodeContent" class="space-y-6">
         <!-- 料理の名前 -->
         <div>
-            <%= f.label :title, "この料理に名前をつけるなら", class: "block text-xs text-[#8e7e75] mb-2 font-medium" %>
+            <div class="flex items-baseline justify-between pr-2 md:pr-5 mb-2">
+                <%= f.label :title, "この料理に名前をつけるなら", class: "block text-xs text-[#8e7e75] mb-2 font-medium" %>
+                <!-- 料理の名前のエラー表示 -->
+                <% if post.errors[:title].any? %>
+                    <span class="text-[#dc143c] text-[11px] font-semibold"><%= post.errors[:title].join("、") %></span>
+                <% end %>
+            </div>
             <%= f.text_field :title,
                 placeholder: "例：おばあちゃんの肉じゃが、風邪の日のコンソメスープ",
                 class: "w-full p-3 bg-[#f2eae1] border-none text-[#4a3b32] text-sm placeholder-[#b1a296] focus:ring-1 focus:ring-[#80351d] focus:outline-none rounded-sm"  %>
         </div>
         <!-- いつ頃か -->
         <div>
-            <%= f.label :when, "この料理を食べた・食べていたのはいつ頃？", class: "block text-xs text-[#8e7e75] mb-2 font-medium" %>
+            <div class="flex items-baseline justify-between pr-2 md:pr-5 mb-2">
+                <%= f.label :when, "この料理を食べた・食べていたのはいつ頃？", class: "block text-xs text-[#8e7e75] mb-2 font-medium" %>
+                <!-- エラー表示 -->
+                <% if post.errors[:when].any? %>
+                    <span class="text-[#dc143c] text-[11px] font-semibold"><%= post.errors[:when].join("、") %></span>
+                <% end %>
+            </div>
             <%= f.text_field :when,
                 placeholder: "例：子供の頃、新卒一年目の時",
                 class: "w-full p-3 bg-[#f2eae1] border-none text-[#4a3b32] text-sm placeholder-[#b1a296] focus:ring-1 focus:ring-[#80351d] focus:outline-none rounded-sm"  %>
         </div>
         <!-- エピソード -->
         <div>
-            <%= f.label :episode, "この料理で思い出すこと", class: "block text-xs text-[#8e7e75] mb-2 font-medium"  %>
+            <div class="flex items-baseline justify-between pr-2 md:pr-5 mb-2">
+                <%= f.label :episode, "この料理で思い出すこと", class: "block text-xs text-[#8e7e75] mb-2 font-medium"  %>
+                <!-- エラー表示 -->
+                <% if post.errors[:episode].any? %>
+                    <span class="text-[#dc143c] text-[11px] font-semibold"><%= post.errors[:episode].join("、") %></span>
+                <% end %>
+            </div>
             <%= f.text_area :episode,
                 rows: 5,
                 placeholder: "その料理にまつわる思い出を、自由に書いてください。",
@@ -77,7 +95,12 @@
 
         <!-- 食材/材料 -->
         <div>
-            <label class="block text-xs text-[#8e7e75] mb-2 font-medium">材料</label>
+            <div class="flex items-baseline justify-between pr-2 md:pr-5 mb-2">
+                <label class="block text-xs text-[#8e7e75] mb-2 font-medium">材料</label>
+                <% if post.errors[:ingredients].any? %>
+                    <span class="text-[#dc143c] text-[11px] font-semibold"><%= post.errors[:ingredients].join("、") %></span>
+                <% end %>
+            </div>
             <div data-post-form-target="ingredientsContainer" class="space-y-2">
                 <div class="ingredient-field flex items-center gap-2">
                     <input type="text" name="post[ingredients][]" placeholder="例：豚こま肉 200g" class="w-full p-3 bg-[#f2eae1] border-none text-[#4a3b32] text-sm placeholder-[#b1a296] focus:ring-1 focus:ring-[#80351d] focus:outline-none rounded-sm">
@@ -89,7 +112,12 @@
 
         <!-- 作り方セクション -->
         <div>
-            <label class="block text-xs text-[#8e7e75] mb-2 font-medium">作り方</label>
+            <div class="flex items-baseline justify-between pr-2 md:pr-5 mb-2">
+                <label class="block text-xs text-[#8e7e75] mb-2 font-medium">作り方</label>
+                <% if post.errors[:steps].any? %>
+                    <span class="text-[#dc143c] text-[11px] font-semibold"><%= post.errors[:steps].join("、") %></span>
+                <% end %>
+            </div>
             <div data-post-form-target="stepsContainer" class="space-y-3">
                 <div class="step-field flex items-start gap-2">
                     <span class="step-number min-w-[20px] pt-3 text-sm font-bold text-[#80351d]">1</span>

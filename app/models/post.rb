@@ -26,7 +26,7 @@ class Post < ApplicationRecord
 
     ingredients.each do |ingredient|
       if ingredient.to_s.length > 30 # 配列に文字列以外があっても安全にカウントできるように変換
-        errors.add(:ingredients, "の各項目は30文字以内で入力してください")
+        errors.add(:ingredients, "各項目は30文字以内で入力してください")
         break # エラーは1つ出れば十分なのでループを抜ける
       end
     end
@@ -38,7 +38,7 @@ class Post < ApplicationRecord
 
     steps.each do |step|
       if step.to_s.length > 100
-        errors.add(:steps, "の各項目は100文字以内で入力してください")
+        errors.add(:steps, "各項目は100文字以内で入力してください")
         break
       end
     end
