@@ -54,11 +54,12 @@ export default class extends Controller {
             this.showRecipe()
         }
         // レシピ画面にいる時は通常通りsubmit（送信）される
-        else {
-            // modal の close メソッドを呼び出す
-            if (this.hasModalOutlet) { // 念のため存在チェック
-                this.modalOutlet.close()
-            }
+    }
+
+    // 入力データの保存成功時にこの関数を呼び出してモーダルを閉じます
+    closeModal() {
+        if (this.hasModalOutlet) {
+            this.modalOutlet.close()
         }
     }
 

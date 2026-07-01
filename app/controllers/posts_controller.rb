@@ -23,7 +23,10 @@ class PostsController < ApplicationController
           # モーダルのpost_formの中身を新しく作り直した空のフォーム（Post.new）で上書き（update）してリセットする
           render turbo_stream: [
             turbo_stream.prepend("posts", partial: "posts/post", locals: { post: @post }),
-            turbo_stream.update("post_form", partial: "posts/form", locals: { post: Post.new })
+            turbo_stream.update("post_form", partial: "posts/form", locals: { post: Post.new }),
+
+            # 保存成功時のみ、post_form_controller.jsの closeModal を実行してモーダルを閉じる
+            turbo_stream.action(:close_modal, "[data-controller='post-form']")
           ]
         end
         # 通常のページ遷移を伴う通信がきた場合、ページ全体をリダイレクトする（保険的な措置）
