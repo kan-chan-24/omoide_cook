@@ -1,6 +1,7 @@
 <!-- 投稿内容の表示 -->
 <!-- カードのスタイル -->
 <%= link_to post_path(post), 
+            id: dom_id(post), 
             data: { turbo_frame: "modal_content" }, 
             class: "bg-[#FAF6EE] border border-[#EBE3D3] shadow-sm overflow-hidden flex flex-col hover:opacity-95 transition-opacity block cursor-pointer" do %>
     <!-- カード上部：画像部分 -->
