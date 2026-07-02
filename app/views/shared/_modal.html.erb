@@ -1,4 +1,4 @@
-<div id="modal" data-modal-target="container" class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
+<div id="modal" data-modal-target="container" data-action="turbo:frame-load->modal#open" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
   <!-- 背景 -->
   <div data-modal-target="backdrop" data-action="click->modal#close" class="fixed inset-0 bg-[#3a2d28]/30 transition-opacity">
   </div>
@@ -8,7 +8,7 @@
     <button type="button" data-action="click->modal#close" class="absolute right-6 top-6 flex h-8 w-8 items-center justify-center rounded-full bg-[#ebdcd0] text-[#7a6a61] hover:bg-[#dfcfc3] transition-colors text-xl font-light">
       ×
     </button>
-    <!-- モーダルのスタイルの内側で、事前に1回だけ読み込ませる -->
-    <%= turbo_frame_tag "post_form", src: new_post_path %>
+    <!-- 汎用的なモーダルの枠組みを用意 -->
+    <%= turbo_frame_tag "modal_content" %>
   </div>
 </div>

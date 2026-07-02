@@ -1,0 +1,109 @@
+<!-- app/views/posts/show.html.erb -->
+<%= turbo_frame_tag "modal_content" do %>
+  <!-- 💡 モーダル内の余白を考慮しつつ、画像が最上部にぴったり収まるようにデザイン -->
+  <div class="font-serif text-[#3a2d28] -mx-6 -mt-5 mb-5 overflow-hidden">
+    
+    <!-- 📸 料理の写真（常に詳細の「一番上」に配置） -->
+    <div class="relative w-full aspect-video bg-[#f2eae1] overflow-hidden">
+      <% if @post.image.attached? %>
+        <%= image_tag @post.image, class: "brightness-95 w-full h-full object-cover" %>
+      <% else %>
+        <!-- 一覧画面と同じ、料理名から1〜3の数字を自動計算するロジック -->
+        <% image_index = (@post.title.hash % 3).abs + 1 %>
+        <% placeholder_filename = "food_sample#{image_index}.jpg" %>
+        
+        <%= image_tag placeholder_filename, class: "brightness-95 w-full h-full object-cover", alt: @post.title %>
+      <% end %>
+      <!-- 写真の右上に絶対配置される閉じるボタン -->
+      <button type="button" 
+              data-action="click->modal#close" 
+              class="absolute right-6 top-6 flex h-8 w-8 items-center justify-center rounded-full bg-[#ebdcd0]/80 text-[#7a6a61] hover:bg-[#dfcfc3] transition-colors text-xl font-light z-20">
+        ×
+      </button>
+    </div>
+
+  </div>
+
+  <!-- 📄 テキストやレシピのコンテンツ（元の左右パディング px-6 を維持するためのコンテナ） -->
+  <div class="font-serif text-[#3a2d28]">
+    
+    <!-- タイトルとエピソード部分 -->
+    <div class="mb-6">
+      <!-- いつ頃 ＆ 料理の名前 -->
+      <span class="text-xs text-[#b8a18f] block mb-1">
+        <%= @post.when.presence || "いつ頃の思い出" %>
+      </span>
+      <h1 class="text-2xl font-bold mb-1 text-[#4a3b32]">
+        <%= @post.title %>
+      </h1>
+      <p class="text-xs text-[#7a6a61] mb-5">
+        by <%= @post.user&.name || "みつき" %>
+      </p>
+      
+      <!-- ✍️ 思い出（エピソードテキスト） -->
+      <p class="text-sm leading-relaxed whitespace-pre-wrap text-[#4a3d36]"><%= @post.episode.to_s.strip %></p>
+    </div>
+
+    <hr class="border-[#ebdcd0] my-6">
+
+    <!-- 📖 レシピトグル部分（中身は以前と変更ありません） -->
+    <% if @post.ingredients.any?(&:present?) || @post.steps.any?(&:present?) %>
+      <details class="group w-full">
+        
+        <!-- トグルのヘッダー部分（背景を透明にし、上下の余白を調整） -->
+        <!-- 文字色をエピソードと統一 -->
+        <summary class="flex justify-between items-center py-4 cursor-pointer list-none text-sm font-light text-[#3a2d28] hover:opacity-70 transition-opacity">
+          <span class="flex items-center gap-2">
+            <span>📖</span> レシピを見る
+          </span>
+          <!-- 右側の矢印を、お手本のような細くシャープな矢印に変更（開閉で180度回転） -->
+          <span class="transition-transform duration-200 group-open:rotate-180 text-[#7a6a61] text-xs font-light font-sans">▼</span>
+        </summary>
+
+        <!-- トグルのコンテンツ部分 -->
+        <div class="pt-2 pb-6 text-sm text-[#4a3d36]">
+
+          <!-- 🥕 材料セクション -->
+          <% active_ingredients = @post.ingredients.select(&:present?) %>
+          <% if active_ingredients.any? %>
+            <div class="mb-6">
+              <!-- 💡 変更点4: 見出しの下線（border-b）を削除し、文字色を調整 -->
+              <h3 class="text-xs font-medium text-[#B66F48] tracking-wider mb-3">材料</h3>
+              <!-- 💡 変更点5: リストの頭を小さな「・」にし、お手本通りのインデントに -->
+              <ul class="space-y-2 pl-1 text-xs text-[#3a2d28]">
+                <% active_ingredients.each do |ingredient| %>
+                  <li class="list-none flex items-start gap-2">
+                    <span class="text-[#8e7e75] select-none">・</span>
+                    <span><%= ingredient %></span>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <!-- 🍳 作り方セクション -->
+          <% active_steps = @post.steps.select(&:present?) %>
+          <% if active_steps.any? %>
+            <div>
+              <!-- 💡 変更点6: 見出しの下線を削除 -->
+              <h3 class="text-xs font-medium text-[#B66F48] tracking-wider mb-3">作り方</h3>
+              <ol class="space-y-3">
+                <% active_steps.each_with_index do |step, index| %>
+                  <li class="flex gap-3 items-start text-xs text-[#3a2d28]">
+                    <!-- 💡 変更点7: 丸数字の背景色を、フォームと同じ肌色-[#ebdcd0]に変更し、より優しく馴染む色味に -->
+                    <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#ebdcd0] text-[#7a6a61] font-medium text-[10px] mt-0.5 select-none">
+                      <%= index + 1 %>
+                    </span>
+                    <span class="leading-relaxed"><%= step %></span>
+                  </li>
+                <% end %>
+              </ol>
+            </div>
+          <% end %>
+          
+        </div>
+      </details>
+    <% end %>
+
+  </div>
+<% end %>
