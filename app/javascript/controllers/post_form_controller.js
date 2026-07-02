@@ -17,6 +17,18 @@ export default class extends Controller {
         this.showEpisode()
     }
 
+    preventEnterSubmit(event) {
+        // テキストエリア（エピソード入力欄など）での通常の「改行のためのEnter」は許可する
+        if (event.target.tagName === "TEXTAREA") {
+            return
+        }
+
+        // 押されたキーが「Enter」だった場合、フォーム送信（デフォルト挙動）を強制ストップする
+        if (event.key === "Enter") {
+            event.preventDefault()
+        }
+    }
+
     // ==========================================
     // 1.タブ切り替えの処理（指示ごとに関数化）
     // ==========================================

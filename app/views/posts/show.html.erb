@@ -34,21 +34,34 @@
         <%= @post.when.presence || "いつ頃の思い出" %>
       </span>
       
-      <!-- タイトルと削除ボタンを横並びに -->
+      <!-- タイトルとアクションボタンを横並びに -->
       <div class="flex justify-between items-center mb-1">
         <h1 class="text-2xl font-bold text-[#4a3b32]">
           <%= @post.title %>
         </h1>
 
-        <!-- 🗑️ 削除ボタン（ゴミ箱アイコン） -->
-        <%= link_to post_path(@post), 
-                    data: { 
-                      turbo_method: :delete, 
-                      turbo_confirm: "この思い出の投稿を削除してもよろしいですか？" 
-                    }, 
-                    class: "text-[#8e7e75] hover:text-[#8C3B2B] transition-colors p-2 text-sm" do %>
-          🗑️
-        <% end %>
+        <!-- 2つのボタンを1つのグループにまとめ、flex と gap-1 で横並びに並列させる -->
+        <div class="flex items-center gap-1 select-none">
+          <!-- 編集ボタン -->
+          <!-- data-turbo-frame="modal_content" により、詳細バケツをそのまま編集フォームに書き換え -->
+          <%= link_to edit_post_path(@post), 
+                      data: { turbo_frame: "modal_content" }, 
+                      class: "text-[#8e7e75] hover:text-[#C37F5A] transition-colors p-2 text-sm",
+                      title: "編集する" do %>
+            ✒️
+          <% end %>
+
+          <!-- 🗑️ 削除ボタン -->
+          <%= link_to post_path(@post), 
+                      data: { 
+                        turbo_method: :delete, 
+                        turbo_confirm: "この思い出の投稿を削除してもよろしいですか？" 
+                      }, 
+                      class: "text-[#8e7e75] hover:text-[#8C3B2B] transition-colors p-2 text-sm",
+                      title: "削除する" do %>
+            🗑️
+          <% end %>
+        </div>
       </div>
 
       <p class="text-xs text-[#7a6a61] mb-5">
