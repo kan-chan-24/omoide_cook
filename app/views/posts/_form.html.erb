@@ -9,7 +9,7 @@
 </div>
 
 <!-- 投稿フォームのテンプレ -->
-<%= form_with model: post, url: posts_path, id: "post_form", class: "space-y-6", data: { controller: "post-form", post_form_modal_outlet: "#global-modal" } do |f| %>
+<%= form_with model: post, url: posts_path, id: "post_form", class: "space-y-6", data: { controller: "post-form", post_form_modal_outlet: "#global-modal", action: "keydown->post-form#preventEnterSubmit" } do |f| %>
     <!-- タブ切り替え部分 -->
     <div class="flex border-b border-[#e1d3c7] mb-6">
         <!-- エピソードタブ -->
