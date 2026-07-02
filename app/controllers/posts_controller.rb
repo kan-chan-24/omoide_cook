@@ -49,6 +49,25 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
   end
 
+  def destroy
+    @post = Post.find(params[:id])
+    @post.destroy
+
+    # Turboのリクエストに対して、命令を返す
+    respond_to do |format|
+      format.turbo_stream {
+        render turbo_stream: [
+          # ① 一覧画面（DOM）から、削除された投稿のカードを消し去る
+          turbo_stream.remove(@post),
+          # ② JavaScript側へ「モーダルを閉じてね」というカスタムイベントを通知
+          turbo_stream.action(:close_modal_for_destroy, "")
+        ]
+      }
+      # 万が一Turboが動かなかったときのフォールバック（保険）
+      format.html { redirect_to root_path, notice: "削除しました" }
+    end
+  end
+
   private
 
   def post_params

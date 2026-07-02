@@ -24,7 +24,7 @@
 
   </div>
 
-  <!-- 📄 テキストやレシピのコンテンツ（元の左右パディング px-6 を維持するためのコンテナ） -->
+  <!-- 📄 テキストやレシピのコンテンツ -->
   <div class="font-serif text-[#3a2d28]">
     
     <!-- タイトルとエピソード部分 -->
@@ -33,9 +33,24 @@
       <span class="text-xs text-[#b8a18f] block mb-1">
         <%= @post.when.presence || "いつ頃の思い出" %>
       </span>
-      <h1 class="text-2xl font-bold mb-1 text-[#4a3b32]">
-        <%= @post.title %>
-      </h1>
+      
+      <!-- タイトルと削除ボタンを横並びに -->
+      <div class="flex justify-between items-center mb-1">
+        <h1 class="text-2xl font-bold text-[#4a3b32]">
+          <%= @post.title %>
+        </h1>
+
+        <!-- 🗑️ 削除ボタン（ゴミ箱アイコン） -->
+        <%= link_to post_path(@post), 
+                    data: { 
+                      turbo_method: :delete, 
+                      turbo_confirm: "この思い出の投稿を削除してもよろしいですか？" 
+                    }, 
+                    class: "text-[#8e7e75] hover:text-[#8C3B2B] transition-colors p-2 text-sm" do %>
+          🗑️
+        <% end %>
+      </div>
+
       <p class="text-xs text-[#7a6a61] mb-5">
         by <%= @post.user&.name || "みつき" %>
       </p>
