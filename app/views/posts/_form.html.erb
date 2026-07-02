@@ -83,14 +83,7 @@
             </div>
             
             <!-- 入力欄（文字が入力される「input」イベント時に、JSの「update」関数を動かす設定） -->
-            <%= f.text_area :episode,
-                rows: 6,
-                placeholder: "その料理にまつわる思い出を、自由に書いてください。",
-                data: {
-                    episode_counter_target: "input",
-                    action: "input->episode-counter#update"
-                }, 
-                class: "w-full p-4 bg-[#f2eae1] border-none text-[#4a3b32] text-sm leading-relaxed placeholder-[#b1a296] focus:ring-1 focus:ring-[#80351d] focus:outline-none resize-none rounded-sm"  %>
+            <%= f.text_area :episode, rows: 6, placeholder: "その料理にまつわる思い出を、自由に書いてください。", data: { episode_counter_target: "input", action: "input->episode-counter#update" }, class: "w-full p-4 bg-[#f2eae1] border-none text-[#4a3b32] text-sm leading-relaxed placeholder-[#b1a296] focus:ring-1 focus:ring-[#80351d] focus:outline-none resize-none rounded-sm" %>
             
             <!-- 進捗バー（メーター） -->
             <div class="w-full h-1 bg-gray-200 rounded-full overflow-hidden">

@@ -1,22 +1,25 @@
 <!-- 投稿内容の表示 -->
 <!-- カードのスタイル -->
-<div class="bg-[#FAF6EE] border border-[#EBE3D3] shadow-sm overflow-hidden flex flex-col">
+<%= link_to post_path(post), 
+            data: { turbo_frame: "modal_content" }, 
+            class: "bg-[#FAF6EE] border border-[#EBE3D3] shadow-sm overflow-hidden flex flex-col hover:opacity-95 transition-opacity block cursor-pointer" do %>
     <!-- カード上部：画像部分 -->
     <div class="relative aspect-video overflow-hidden">
         <% if post.image.attached? %>
             <%= image_tag post.image, class: "brightness-95 w-full h-full object-cover" %>
         <% else %>
-            <!-- 料理名の文字数から、1〜3の数字を自動計算する（毎回同じ料理名なら同じ画像になる） -->
-            <% image_index = (post.title.hash % 3).abs + 1 %>
-            <% placeholder_filename = "food_sample#{image_index}.jpg" %>
-            
-            <%= image_tag placeholder_filename, class: "brightness-95 w-full h-full object-cover", alt: post.title %>
+          <!-- 料理名の文字数から、1〜3の数字を自動計算する -->
+          <% image_index = (post.title.hash % 3).abs + 1 %>
+          <% placeholder_filename = "food_sample#{image_index}.jpg" %>
+          
+          <%= image_tag placeholder_filename, class: "brightness-95 w-full h-full object-cover", alt: post.title %>
         <% end %>
         <span class="absolute bottom-3 left-4 text-white font-serif-sub text-sm drop-shadow-xl">
             <%= post.when %>
         </span>
     </div>
-    <!--カード下部：テキスト部分-->
+
+    <!--カード下部：テキスト部分 -->
     <div class="px-4 py-3 flex-1 flex flex-col justify-between">
         <!--タイトルと本文  -->
         <div class="py-2">
@@ -28,4 +31,4 @@
             <p class="text-[#5C5346] text-base tracking-wide">by <%= post.user.name %></p>
         </div>
     </div>
-</div>
+<% end %>
