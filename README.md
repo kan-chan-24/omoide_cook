@@ -146,7 +146,6 @@
 - Hotwire（Stimulus + Turbo）
 - JavaScript
 - Tailwind CSS
-:
 
 ## 画面遷移図
 https://www.figma.com/design/9fTr75MkiIRyykONl8BlFL/%E3%81%82%E3%81%AE%E6%99%82%E9%A3%9F%E3%81%B9%E3%81%9F%E3%82%A2%E3%83%AC%EF%BC%9A%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3?node-id=0-1&t=4BWkNSNfJb8vbZQi-1
