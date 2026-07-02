@@ -155,4 +155,6 @@ https://www.figma.com/design/9fTr75MkiIRyykONl8BlFL/%E3%81%82%E3%81%AE%E6%99%82%
 <img width="526" height="482" alt="Image" src="https://github.com/user-attachments/assets/0c72261c-d520-49db-ad8f-5ae85d3028ee" />
 
 ## 今後の改善ポイント
-:
+- ページネーションの実装
+- 標準フォント、絵文字アイコン箇所の調整
+- アプリケーションロゴの実装
