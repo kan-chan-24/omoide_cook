@@ -1,0 +1,78 @@
+<div class="max-w-md mx-auto my-12 px-6 py-8 bg-[#FAF6EE] border border-[#EBE3D3] shadow-sm rounded-sm font-serif text-[#3a2d28]">
+  
+  <!-- ヘッダー部分 -->
+  <div class="text-center mb-8">
+    <span class="inline-block text-xs border border-[#9b5134] text-[#9b5134] px-3 py-1 font-bold mb-4 transform -rotate-2 origin-center select-none">
+      はじめる
+    </span>
+    <h2 class="text-xl font-bold text-[#2c1d11] tracking-wide">
+      アカウントを作成する
+    </h2>
+    <p class="text-xs text-[#8e7e75] mt-2">
+      思い出の味とエピソードを記録していきましょう。
+    </p>
+  </div>
+
+  <!-- 登録フォーム -->
+  <%= form_with model: @user, url: signup_path, class: "space-y-6" do |f| %>
+    
+    <!-- お名前 -->
+    <div>
+      <div class="flex items-baseline justify-between mb-2">
+        <%= f.label :name, "お名前（表示名）", class: "block text-xs font-medium text-[#8e7e75]" %>
+        <% if @user.errors[:name].any? %>
+          <span class="text-[#dc143c] text-[11px] font-semibold"><%= @user.errors[:name].join("、") %></span>
+        <% end %>
+      </div>
+      <%= f.text_field :name,
+          placeholder: "例：みつき",
+          class: "w-full p-3 bg-[#f2eae1] border-none text-[#4a3b32] text-sm placeholder-[#b1a296] focus:ring-1 focus:ring-[#80351d] focus:outline-none rounded-sm" %>
+    </div>
+
+    <!-- メールアドレス -->
+    <!-- <div>
+      <div class="flex items-baseline justify-between mb-2">
+        <%= f.label :email, "メールアドレス", class: "block text-xs font-medium text-[#8e7e75]" %>
+        <% if @user.errors[:email].any? %>
+          <span class="text-[#dc143c] text-[11px] font-semibold"><%= @user.errors[:email].join("、") %></span>
+        <% end %>
+      </div>
+      <%= f.email_field :email,
+          placeholder: "example@email.com",
+          class: "w-full p-3 bg-[#f2eae1] border-none text-[#4a3b32] text-sm placeholder-[#b1a296] focus:ring-1 focus:ring-[#80351d] focus:outline-none rounded-sm" %>
+    </div> -->
+
+    <!-- パスワード -->
+    <div>
+      <div class="flex items-baseline justify-between mb-2">
+        <%= f.label :password, "パスワード（6文字以上）", class: "block text-xs font-medium text-[#8e7e75]" %>
+        <% if @user.errors[:password].any? %>
+          <span class="text-[#dc143c] text-[11px] font-semibold"><%= @user.errors[:password].join("、") %></span>
+        <% end %>
+      </div>
+      <%= f.password_field :password,
+          placeholder: "••••••••",
+          class: "w-full p-3 bg-[#f2eae1] border-none text-[#4a3b32] text-sm placeholder-[#b1a296] focus:ring-1 focus:ring-[#80351d] focus:outline-none rounded-sm" %>
+    </div>
+
+    <!-- パスワード（確認用） -->
+    <div>
+      <div class="flex items-baseline justify-between mb-2">
+        <%= f.label :password_confirmation, "パスワード（確認用）", class: "block text-xs font-medium text-[#8e7e75]" %>
+        <% if @user.errors[:password_confirmation].any? %>
+          <span class="text-[#dc143c] text-[11px] font-semibold"><%= @user.errors[:password_confirmation].join("、") %></span>
+        <% end %>
+      </div>
+      <%= f.password_field :password_confirmation,
+          placeholder: "••••••••",
+          class: "w-full p-3 bg-[#f2eae1] border-none text-[#4a3b32] text-sm placeholder-[#b1a296] focus:ring-1 focus:ring-[#80351d] focus:outline-none rounded-sm" %>
+    </div>
+
+    <!-- 送信ボタン -->
+    <div class="pt-2">
+      <%= f.submit "登録する", 
+          class: "w-full py-4 text-center text-sm font-semibold text-white bg-[#8C3B2B] hover:bg-[#7d3a3d] transition-colors rounded shadow-sm cursor-pointer border-none" %>
+    </div>
+
+  <% end %>
+</div>

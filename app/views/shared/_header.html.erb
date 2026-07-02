@@ -4,14 +4,34 @@
       <div>
         <%= link_to "あの時食べたアレ", root_path, class: "text-xl md:text-2xl font-bold text-[#2A1A0A] tracking-wide hover:opacity-80 transition" %>
       </div>
-      <!-- 右端：投稿ボタン -->
-      <div>
-        <%= button_tag "+ 書く", 
-          type: "button", 
-          data: { 
-            action: "click->modal#openNew" 
-          },
-          class: "bg-[#8C3B2B] text-white text-sm font-semibold px-3 md:px-5 py-2 rounded shadow-sm hover:bg-[#7d3a3d] transition cursor-pointer" %>
+
+      <!-- 右端：ログイン状態に応じたボタンの表示 -->
+      <div class="flex items-center gap-4">
+        <!-- ログインしているかどうかの条件分岐 -->
+        <% if logged_in? %>
+          <!-- ログイン中の表示：ユーザー名と、ログアウトボタン -->
+          <span class="hidden md:block text-xs text-[#5C5346]">こんにちは！<%= current_user.name %> さん</span>
+          
+          <%= link_to logout_path, 
+            data: { turbo_method: :delete }, 
+            class: "text-xs text-[#8e7e75] hover:underline p-2 flex items-center gap-1",
+            title: "ログアウト" do %>
+            <span class="text-lg leading-none">🚪</span><span class="hidden md:inline">ログアウト</span>
+          <% end %>
+
+          <!--投稿ボタン -->
+          <%= button_tag type: "button", 
+            data: { action: "click->modal#openNew" },
+            class: "bg-[#8C3B2B] text-white text-xs md:text-sm font-semibold px-3 md:px-5 py-2 rounded shadow-sm hover:bg-[#7d3a3d] transition cursor-pointer shrink-0" do %>
+            <span>+</span><span class="hidden md:inline"> 書く</span><span class="md:hidden">書く</span>
+          <% end %>
+        
+        <% else %>
+          <!-- 未ログイン時の表示：ログイン画面と新規登録へのリンク -->
+          <%= link_to "ログイン", login_path, class: "text-xs text-[#8e7e75] hover:underline p-1" %>
+          <%= link_to "登録", signup_path, class: "text-xs text-[#8c3b2b] font-semibold hover:underline p-1" %>
+        <% end %>
       </div>
+
     </div>
 </header>
