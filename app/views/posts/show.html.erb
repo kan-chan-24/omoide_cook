@@ -40,28 +40,31 @@
           <%= @post.title %>
         </h1>
 
-        <!-- 2つのボタンを1つのグループにまとめ、flex と gap-1 で横並びに並列させる -->
-        <div class="flex items-center gap-1 select-none">
-          <!-- 編集ボタン -->
-          <!-- data-turbo-frame="modal_content" により、詳細バケツをそのまま編集フォームに書き換え -->
-          <%= link_to edit_post_path(@post), 
-                      data: { turbo_frame: "modal_content" }, 
-                      class: "text-[#8e7e75] hover:text-[#C37F5A] transition-colors p-2 text-sm",
-                      title: "編集する" do %>
-            ✒️
-          <% end %>
+        <!-- ログイン中、かつ、投稿の作成者IDとログイン中のユーザーIDが一致するときだけ編集系のボタンを表示 -->
+        <% if logged_in? && @post.user_id == current_user.id %>
+          <!-- 2つのボタンを1つのグループにまとめ、flex と gap-1 で横並びに並列させる -->
+          <div class="flex items-center gap-1 select-none">
+            <!-- 編集ボタン -->
+            <!-- data-turbo-frame="modal_content" により、詳細バケツをそのまま編集フォームに書き換え -->
+            <%= link_to edit_post_path(@post), 
+                        data: { turbo_frame: "modal_content" }, 
+                        class: "text-[#8e7e75] hover:text-[#C37F5A] transition-colors p-2 text-sm",
+                        title: "編集する" do %>
+              ✒️
+            <% end %>
 
-          <!-- 🗑️ 削除ボタン -->
-          <%= link_to post_path(@post), 
-                      data: { 
-                        turbo_method: :delete, 
-                        turbo_confirm: "この思い出の投稿を削除してもよろしいですか？" 
-                      }, 
-                      class: "text-[#8e7e75] hover:text-[#8C3B2B] transition-colors p-2 text-sm",
-                      title: "削除する" do %>
-            🗑️
-          <% end %>
-        </div>
+            <!-- 🗑️ 削除ボタン -->
+            <%= link_to post_path(@post), 
+                        data: { 
+                          turbo_method: :delete, 
+                          turbo_confirm: "この思い出の投稿を削除してもよろしいですか？" 
+                        }, 
+                        class: "text-[#8e7e75] hover:text-[#8C3B2B] transition-colors p-2 text-sm",
+                        title: "削除する" do %>
+              🗑️
+            <% end %>
+          </div>
+        <% end %>
       </div>
 
       <p class="text-xs text-[#7a6a61] mb-5">

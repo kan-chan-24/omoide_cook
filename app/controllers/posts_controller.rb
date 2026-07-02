@@ -5,13 +5,17 @@ class PostsController < ApplicationController
   end
 
   def new
-    @post = Post.new
+    # ログインしていれば、そのユーザーに紐付いた空の投稿データを作成（アソシエーション活用）
+    if logged_in?
+      @post = current_user.posts.build
+    else
+      @post = Post.new
+    end
   end
 
   def create
-    # フォームから送られてきたデータを取得
-    @post = Post.new(post_params)
-    @post.user_id = User.first.id  # 仮のユーザーID（ログイン処理実装時にcurrent_userに変更）
+    # 現在ログインしているユーザー（current_user）に紐付いた投稿データを新しく作成
+    @post = current_user.posts.build(post_params)
 
     # -- バリデーションOK --
     if @post.save
@@ -21,9 +25,11 @@ class PostsController < ApplicationController
         format.turbo_stream do
           # id="posts"（投稿の配列）の先頭に、今作った新しい投稿（@post）のカードを追加（prepend）する
           # モーダルのpost_formの中身を新しく作り直した空のフォーム（Post.new）で上書き（update）してリセットする
+          new_empty_post = logged_in? ? current_user.posts.build : Post.new
+          
           render turbo_stream: [
             turbo_stream.prepend("posts", partial: "posts/post", locals: { post: @post }),
-            turbo_stream.update("post_form", partial: "posts/form", locals: { post: Post.new }),
+            turbo_stream.update("post_form", partial: "posts/form", locals: { post: new_empty_post }),
 
             # 保存成功時のみ、post_form_controller.jsの closeModal を実行してモーダルを閉じる
             turbo_stream.action(:close_modal, "[data-controller='post-form']")
