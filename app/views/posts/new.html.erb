@@ -1,4 +1,14 @@
 <!-- newだよ -->
 <%= turbo_frame_tag "post_form" do %>
+  <!-- 新規投稿用のモーダル画面ヘッダー部分 -->
+  <div class="text-left mb-8">
+      <span class="inline-block text-xs border border-[#9b5134] text-[#9b5134] px-3 py-1 font-bold mb-4 transform -rotate-3 origin-center select-none">
+          思い出を記録する
+      </span>
+      <h2 class="text-xl font-bold text-[#2c1d11]">
+          あの時食べたアレ、書いてみませんか？
+      </h2>
+  </div>
+  <!-- 投稿入力（新規・編集共通）フォームのジャーナルを読み込み -->
   <%= render "form", post: @post %>
 <% end %>

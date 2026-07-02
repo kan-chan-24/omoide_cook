@@ -1,15 +1,5 @@
-<!-- ヘッダー部分 -->
-<div class="text-left mb-8">
-    <span class="inline-block text-xs border border-[#9b5134] text-[#9b5134] px-3 py-1 font-bold mb-4 transform -rotate-3 origin-center">
-        思い出を記録する
-    </span>
-    <h2 class="text-xl font-bold text-[#2c1d11]">
-        あの時食べたアレ、書いてみませんか？
-    </h2>
-</div>
-
 <!-- 投稿フォームのテンプレ -->
-<%= form_with model: post, url: posts_path, id: "post_form", class: "space-y-6", data: { controller: "post-form", post_form_modal_outlet: "#global-modal", action: "keydown->post-form#preventEnterSubmit" } do |f| %>
+<%= form_with model: post, id: "post_form", class: "space-y-6", data: { controller: "post-form", post_form_modal_outlet: "#global-modal", action: "keydown->post-form#preventEnterSubmit" } do |f| %>
     <!-- タブ切り替え部分 -->
     <div class="flex border-b border-[#e1d3c7] mb-6">
         <!-- エピソードタブ -->
@@ -105,39 +95,57 @@
 
         <!-- 食材/材料 -->
         <div>
+            <!-- エラー表示 -->
             <div class="flex items-baseline justify-between pr-2 md:pr-5 mb-2">
                 <label class="block text-xs text-[#8e7e75] mb-2 font-medium">材料</label>
                 <% if post.errors[:ingredients].any? %>
                     <span class="text-[#dc143c] text-[11px] font-semibold"><%= post.errors[:ingredients].join("、") %></span>
                 <% end %>
             </div>
+            <!-- DBに保存されている材料を1つずつ取り出してループ表示 -->
+            <!-- データが空っぽ（新規）の場合は、最低1つの空の入力欄を表示 -->
             <div data-post-form-target="ingredientsContainer" class="space-y-2">
-                <div class="ingredient-field flex items-center gap-2">
-                    <input type="text" name="post[ingredients][]" placeholder="例：豚こま肉 200g" class="w-full p-3 bg-[#f2eae1] border-none text-[#4a3b32] text-sm placeholder-[#b1a296] focus:ring-1 focus:ring-[#80351d] focus:outline-none rounded-sm">
-                    <button type="button" data-action="click->post-form#removeIngredient" class="p-2 text-[#8e7e75] hover:text-[#80351d] bg-transparent border-none cursor-pointer">🗑️</button>
-                </div>
+                <% (post.ingredients.presence || [""]).each do |ingredient| %>
+                    <div class="ingredient-field flex items-center gap-2">
+                        <!-- value 属性に、取り出した一括データ（ingredient）をそのまま流し込む -->
+                        <input type="text" 
+                               name="post[ingredients][]" 
+                               placeholder="例：豚こま肉 200g" 
+                               value="<%= ingredient %>" 
+                               class="w-full p-3 bg-[#f2eae1] border-none text-[#4a3b32] text-sm placeholder-[#b1a296] focus:ring-1 focus:ring-[#80351d] focus:outline-none rounded-sm">
+                        <button type="button" data-action="click->post-form#removeIngredient" class="p-2 text-[#8e7e75] hover:text-[#80351d] bg-transparent border-none cursor-pointer">🗑️</button>
+                    </div>
+                <% end %>
             </div>
             <button type="button" data-action="click->post-form#addIngredient" class="mt-2 text-xs font-bold text-[#80351d] bg-transparent border-none cursor-pointer hover:underline">+ 材料を追加する</button>
         </div>
 
         <!-- 作り方セクション -->
         <div>
+            <!-- エラー表示 -->
             <div class="flex items-baseline justify-between pr-2 md:pr-5 mb-2">
                 <label class="block text-xs text-[#8e7e75] mb-2 font-medium">作り方</label>
                 <% if post.errors[:steps].any? %>
                     <span class="text-[#dc143c] text-[11px] font-semibold"><%= post.errors[:steps].join("、") %></span>
                 <% end %>
             </div>
+            <!-- 材料と同じく、保存されている工程をループ表示 -->
+            <!-- each_with_index を使うことで、左側の工程番号（1, 2, 3..）も自動で連動 -->
             <div data-post-form-target="stepsContainer" class="space-y-3">
-                <div class="step-field flex items-start gap-2">
-                    <span class="step-number min-w-[20px] pt-3 text-sm font-bold text-[#80351d]">1</span>
-                    <textarea name="post[steps][]" rows="2" placeholder="例：野菜を一口大に切る" class="w-full p-3 bg-[#f2eae1] border-none text-[#4a3b32] text-sm placeholder-[#b1a296] focus:ring-1 focus:ring-[#80351d] focus:outline-none resize-none rounded-sm"></textarea>
-                    <button type="button" data-action="click->post-form#removeStep" class="p-2 pt-3 text-[#8e7e75] hover:text-[#80351d] bg-transparent border-none cursor-pointer">🗑️</button>
-                </div>
+                <% (post.steps.presence || [""]).each_with_index do |step, index| %>
+                    <div class="step-field flex items-start gap-2">
+                        <span class="step-number min-w-[20px] pt-3 text-sm font-bold text-[#80351d]"><%= index + 1 %></span>
+                        <!-- 💡 【超重要】textarea から value 属性を消し、タグの「間」に <%= step %> を挟み込みました -->
+                        <textarea name="post[steps][]" 
+                                  rows="2" 
+                                  placeholder="例：野菜を一口大に切る" 
+                                  class="w-full p-3 bg-[#f2eae1] border-none text-[#4a3b32] text-sm placeholder-[#b1a296] focus:ring-1 focus:ring-[#80351d] focus:outline-none resize-none rounded-sm"><%= step %></textarea>
+                        <button type="button" data-action="click->post-form#removeStep" class="p-2 pt-3 text-[#8e7e75] hover:text-[#80351d] bg-transparent border-none cursor-pointer">🗑️</button>
+                    </div>
+                <% end %>
             </div>
             <button type="button" data-action="click->post-form#addStep" class="mt-2 text-xs font-bold text-[#80351d] bg-transparent border-none cursor-pointer hover:underline">+ 工程を追加する</button>
         </div>
-
     </div>
 
     <!-- アクションボタン（次へ / 投稿する） -->

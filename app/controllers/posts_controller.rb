@@ -49,6 +49,28 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
   end
 
+  def edit
+    @post = Post.find(params[:id])
+  end
+
+  def update
+    @post = Post.find(params[:id])
+
+    if @post.update(post_params)
+      format.turbo_stream {
+        render turbo_stream: [
+          # 詳細モーダルの中身を、新しく更新された「show」のHTMLで丸ごと上書き（置換）する
+          turbo_stream.replace("modal_content", partial: "posts/show", locals: { post: @post }),
+          # 一覧画面のカードも最新の内容にパッと置き換える（dom_idで正確に狙い撃ち）
+          turbo_stream.replace(helpers.dom_id(@post), partial: "posts/post", locals: { post: @post })
+        ]
+      }
+      format.html { redirect_to @post, notice: "更新しました" }
+    end
+    # バリデーションエラーが起きた場合は、編集フォーム（edit）をエラーメッセージ付きで再表示
+    render :edit, status: :unprocessable_entity
+  end
+
   def destroy
     @post = Post.find(params[:id])
     @post.destroy
