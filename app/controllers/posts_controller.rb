@@ -1,4 +1,8 @@
 class PostsController < ApplicationController
+  # 特定のアクションが実行される前に、自作のガード用メソッドを自動で発火
+  before_action :require_login, only: [:new, :create, :edit, :update, :destroy]
+  before_action :correct_user, only: [:edit, :update, :destroy]
+
   def index
     # 投稿一覧用：全てのpostsを取得
     @posts = Post.includes(:user).order(created_at: :desc)
@@ -43,7 +47,7 @@ class PostsController < ApplicationController
       respond_to do |format|
         # Turbo（非同期）の場合
         format.turbo_stream do
-          render turbo_stream: turbo_stream.update("post_form", partial: "posts/form", locals: { post: @post })
+          render turbo_stream: turbo_stream.update("post_form", template: "posts/new")
         end
         # 通常のページ遷移を伴う通信がきた場合は、render処理で画面を繰り返す）
         format.html { render :index }
@@ -97,6 +101,24 @@ class PostsController < ApplicationController
   end
 
   private
+
+  # 未ログインのユーザーをログイン画面（またはトップ）へ強制送還
+  def require_login
+    unless logged_in?
+      # フラッシュメッセージで警告を添えて、ログイン画面へリダイレクトします
+      redirect_to login_path, alert: "その操作を行うにはログインが必要です。"
+    end
+  end
+
+  # 他人の投稿を勝手に編集・削除しようとする人をトップページへ強制送還
+  def correct_user
+    @post = Post.find(params[:id])
+    # 投稿の作成者IDと、今ログインしている人のIDが一致しない場合
+    if @post.user_id != current_user.id
+      # 警告を添えて、トップページへ押し戻します
+      redirect_to root_path, alert: "自分以外の投稿を編集・削除することはできません。"
+    end
+  end
 
   def post_params
     params.require(:post).permit(:title, :when, :episode, :image, ingredients: [], steps: [])
