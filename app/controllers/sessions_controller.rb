@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       # 認証成功時：ブラウザのセッションにユーザーIDを記憶させる（ログイン状態にする）
       session[:user_id] = user.id
-      redirect_to root_path, notice: "ログインしました！"
+      redirect_to root_path, notice: "ログインしました！", status: :see_other
     else
       # 認証失敗時：エラーメッセージを表示してログイン画面を再表示
       flash.now[:alert] = "お名前、またはパスワードが正しくありません。"
@@ -22,6 +22,6 @@ class SessionsController < ApplicationController
   def destroy
     # ブラウザのセッションからユーザーIDを消去する（ログアウト状態にする）
     session[:user_id] = nil
-    redirect_to root_path, notice: "ログアウトしました。"
+    redirect_to root_path, notice: "ログアウトしました。", status: :see_other
   end
 end
