@@ -27,13 +27,16 @@ class PostsController < ApplicationController
       respond_to do |format|
         # Turbo（非同期）の場合
         format.turbo_stream do
+          # 投稿一覧へ追加するために、先に保存に成功した現在の @post を一時保存
+          saved_post = @post
+
           # id="posts"（投稿の配列）の先頭に、今作った新しい投稿（@post）のカードを追加（prepend）する
           # モーダルのpost_formの中身を新しく作り直した空のフォーム（Post.new）で上書き（update）してリセットする
-          new_empty_post = logged_in? ? current_user.posts.build : Post.new
+          @post = logged_in? ? current_user.posts.build : Post.new
           
           render turbo_stream: [
-            turbo_stream.prepend("posts", partial: "posts/post", locals: { post: @post }),
-            turbo_stream.update("post_form", partial: "posts/form", locals: { post: new_empty_post }),
+            turbo_stream.prepend("posts", partial: "posts/post", locals: { post: saved_post }),
+            turbo_stream.update("post_form", template: "posts/new"),
 
             # 保存成功時のみ、post_form_controller.jsの closeModal を実行してモーダルを閉じる
             turbo_stream.action(:close_modal, "[data-controller='post-form']")
