@@ -4,7 +4,7 @@
 
 ## デプロイ
 - Renderで公開予定
-- URL: ***
+- URL: https://omoide-cook.onrender.com
 
 ## サービス概要
 このアプリは、「料理にまつわるエピソードを投稿する」サービスを提供します。<br>
