@@ -11,7 +11,10 @@
 
     <!-- 新規投稿用（最初からずっと先読みして保持しておく部屋） -->
     <div id="new-post-room">
-      <%= turbo_frame_tag "post_form", src: new_post_path %>
+      <% if logged_in? %>
+        <!-- ログインしている時だけ、裏側の先読み通信を発生させる -->
+        <%= turbo_frame_tag "post_form", src: new_post_path %>
+      <% end %>
     </div>
 
     <!-- 投稿詳細用（クリックされた時だけ動的にHTMLを流し込む部屋） -->
