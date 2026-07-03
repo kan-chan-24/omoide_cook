@@ -9,7 +9,8 @@ export default class extends Controller {
         "episodeTab", "recipeTab",
         "episodeContent", "recipeContent",
         "backBtn", "submitBtn",
-        "ingredientsContainer", "stepsContainer"
+        "ingredientsContainer", "stepsContainer",
+        "fileInput", "fileNameDisplay"
     ]
 
     connect() {
@@ -26,6 +27,23 @@ export default class extends Controller {
         // 押されたキーが「Enter」だった場合、フォーム送信（デフォルト挙動）を強制ストップする
         if (event.key === "Enter") {
             event.preventDefault()
+        }
+    }
+
+    // コントローラーの末尾（または適切な場所）に以下の関数を追加
+    updateFileName(event) {
+        const input = this.fileInputTarget
+        const display = this.fileNameDisplayTarget
+
+        // 選択されたファイル（配列の最初の1つ）を取得
+        const file = input.files[0]
+
+        if (file) {
+            // 新しく選択されたファイル名を表示
+            display.innerText = file.name
+        } else {
+            // 選択がキャンセルされた場合は、元々添付されていた名前かデフォルト文字に戻す
+            display.innerText = input.dataset.attachedName || "画像を選択する"
         }
     }
 
