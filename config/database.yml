@@ -13,3 +13,8 @@ development:
 test:
   <<: *default
   database: app_test
+
+production:
+  <<: *default
+  # 本番環境ではNeonのデータベースURLを読み込めるようにする
+  url: <%= ENV['DATABASE_URL'] %>
