@@ -44,6 +44,9 @@ gem "bootsnap", require: false
 # パスワードのハッシュ化するためのgem
 gem 'bcrypt'
 
+# 本番環境用の外部ストレージ
+gem "cloudinary"
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
