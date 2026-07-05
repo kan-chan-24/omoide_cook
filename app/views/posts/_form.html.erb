@@ -81,7 +81,7 @@
             </div>
         </div>
         <!-- エピソード入力欄（全体をdivで囲み、カウンター用のコントローラーを指定します） -->
-        <div class="space-y-2" data-controller="charactor-counter" data-charactor-counter-max-length-value="<%= Post::MAX_EPISODE_LENGTH %>">
+        <div class="space-y-2" data-controller="character-counter" data-character-counter-max-length-value="<%= Post::MAX_EPISODE_LENGTH %>">
             
             <!-- ラベルとインラインエラー表示 -->
             <div class="flex items-baseline justify-between pr-2 md:pr-5 mb-2">
@@ -92,16 +92,16 @@
             </div>
             
             <!-- 入力欄（文字が入力される「input」イベント時に、JSの「update」関数を動かす設定） -->
-            <%= f.text_area :episode, rows: 6, placeholder: "その料理にまつわる思い出を、自由に書いてください。", data: { charactor_counter_target: "input", action: "input->charactor-counter#update" }, class: "w-full p-4 bg-[#f2eae1] border-none text-[#4a3b32] text-sm leading-relaxed placeholder-[#b1a296] focus:ring-1 focus:ring-[#80351d] focus:outline-none resize-none rounded-sm" %>
+            <%= f.text_area :episode, rows: 6, placeholder: "その料理にまつわる思い出を、自由に書いてください。", data: { character_counter_target: "input", action: "input->character-counter#update" }, class: "w-full p-4 bg-[#f2eae1] border-none text-[#4a3b32] text-sm leading-relaxed placeholder-[#b1a296] focus:ring-1 focus:ring-[#80351d] focus:outline-none resize-none rounded-sm" %>
             
             <!-- 進捗バー（メーター） -->
             <div class="w-full h-1 bg-gray-200 rounded-full overflow-hidden">
-                <div data-charactor-counter-target="progressBar" class="h-full bg-[#80351d] transition-all duration-150" style="width: 0%;"></div>
+                <div data-character-counter-target="progressBar" class="h-full bg-[#80351d] transition-all duration-150" style="width: 0%;"></div>
             </div>
 
             <!-- 文字数カウントの数字表示（右寄せ） -->
             <div class="text-right text-xs text-[#8e7e75]">
-                <span data-charactor-counter-target="count" class="font-medium">0</span> / <%= Post::MAX_EPISODE_LENGTH %>文字
+                <span data-character-counter-target="count" class="font-medium">0</span> / <%= Post::MAX_EPISODE_LENGTH %>文字
             </div>
         </div>
     </div>
@@ -115,10 +115,13 @@
         <!-- 食材/材料 -->
         <div>
             <!-- エラー表示 -->
-            <div class="flex items-baseline justify-between pr-2 md:pr-5 mb-2">
-                <label class="block text-xs text-[#8e7e75] mb-2 font-medium">材料</label>
+            <div class="flex flex-wrap items-baseline justify-between gap-x-2 pr-2 md:pr-5 mb-2">
+                <label class="block text-xs text-[#8e7e75] font-medium">
+                    材料
+                    <span class="text-[10px] sm:text-[11px] text-[#a39489] font-normal">（各項目<%= Post::MAX_INGREDIENT_LENGTH %>文字まで）</span>
+                </label>
                 <% if post.errors[:ingredients].any? %>
-                    <span class="text-[#dc143c] text-[11px] font-semibold"><%= post.errors[:ingredients].join("、") %></span>
+                    <span class="text-[10px] sm:text-[11px] text-[#dc143c] font-semibold"><%= post.errors[:ingredients].join("、") %></span>
                 <% end %>
             </div>
             <!-- DBに保存されている材料を1つずつ取り出してループ表示 -->
@@ -142,10 +145,13 @@
         <!-- 作り方セクション -->
         <div>
             <!-- エラー表示 -->
-            <div class="flex items-baseline justify-between pr-2 md:pr-5 mb-2">
-                <label class="block text-xs text-[#8e7e75] mb-2 font-medium">作り方</label>
+            <div class="flex flex-wrap items-baseline justify-between gap-x-2 pr-2 md:pr-5 mb-2">
+                <label class="block text-xs text-[#8e7e75] font-medium">
+                    作り方
+                    <span class="text-[10px] sm:text-[11px] text-[#a39489] font-normal">（各項目<%= Post::MAX_STEP_LENGTH %>文字まで）</span>
+                </label>
                 <% if post.errors[:steps].any? %>
-                    <span class="text-[#dc143c] text-[11px] font-semibold"><%= post.errors[:steps].join("、") %></span>
+                    <span class="text-[10px] sm:text-[11px] text-[#dc143c] font-semibold"><%= post.errors[:steps].join("、") %></span>
                 <% end %>
             </div>
             <!-- 材料と同じく、保存されている工程をループ表示 -->

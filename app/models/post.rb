@@ -13,6 +13,8 @@ class Post < ApplicationRecord
   MAX_TITLE_LENGTH = 40
   MAX_WHEN_LENGTH = 20
   MAX_EPISODE_LENGTH = 400
+  MAX_INGREDIENT_LENGTH = 30
+  MAX_STEP_LENGTH = 100
 
   validates :title, presence: true, length: { maximum: MAX_TITLE_LENGTH }
   validates :user_id, presence: true
@@ -30,8 +32,8 @@ class Post < ApplicationRecord
     return if ingredients.blank? # 仮に空でもエラーが出ないように対策
 
     ingredients.each do |ingredient|
-      if ingredient.to_s.length > 30 # 配列に文字列以外があっても安全にカウントできるように変換
-        errors.add(:ingredients, "各項目は30文字以内で入力してください")
+      if ingredient.to_s.length > MAX_INGREDIENT_LENGTH # 配列に文字列以外があっても安全にカウントできるように変換
+        errors.add(:ingredients, "各項目は#{MAX_INGREDIENT_LENGTH}文字以内で入力してください")
         break # エラーは1つ出れば十分なのでループを抜ける
       end
     end
@@ -42,8 +44,8 @@ class Post < ApplicationRecord
     return if steps.blank?
 
     steps.each do |step|
-      if step.to_s.length > 100
-        errors.add(:steps, "各項目は100文字以内で入力してください")
+      if step.to_s.length > MAX_STEP_LENGTH
+        errors.add(:steps, "各項目は#{MAX_STEP_LENGTH}文字以内で入力してください")
         break
       end
     end
