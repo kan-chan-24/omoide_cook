@@ -21,30 +21,38 @@
     <!-- ① エピソードタブ コンテンツ -->
     <div data-post-form-target="episodeContent" class="space-y-6">
         <!-- 料理の名前 -->
-        <div>
+        <div data-controller="character-counter" data-character-counter-max-length-value="<%= Post::MAX_TITLE_LENGTH %>">
             <div class="flex items-baseline justify-between pr-2 md:pr-5 mb-2">
                 <%= f.label :title, "この料理に名前をつけるなら", class: "block text-xs text-[#8e7e75] mb-2 font-medium" %>
-                <!-- 料理の名前のエラー表示 -->
                 <% if post.errors[:title].any? %>
                     <span class="text-[#dc143c] text-[11px] font-semibold"><%= post.errors[:title].join("、") %></span>
                 <% end %>
             </div>
             <%= f.text_field :title,
                 placeholder: "例：おばあちゃんの肉じゃが、風邪の日のコンソメスープ",
+                data: { character_counter_target: "input", action: "input->character-counter#update" },
                 class: "w-full p-3 bg-[#f2eae1] border-none text-[#4a3b32] text-sm placeholder-[#b1a296] focus:ring-1 focus:ring-[#80351d] focus:outline-none rounded-sm"  %>
+            <!-- リアルタイムカウント処理 -->
+            <div class="text-right text-xs text-[#8e7e75] mt-1">
+                <span data-character-counter-target="count" class="font-medium">0</span> / <%= Post::MAX_TITLE_LENGTH %>文字
+            </div>
         </div>
         <!-- いつ頃か -->
-        <div>
+        <div data-controller="character-counter" data-character-counter-max-length-value="<%= Post::MAX_WHEN_LENGTH %>">
             <div class="flex items-baseline justify-between pr-2 md:pr-5 mb-2">
                 <%= f.label :when, "この料理を食べた・食べていたのはいつ頃？", class: "block text-xs text-[#8e7e75] mb-2 font-medium" %>
-                <!-- エラー表示 -->
                 <% if post.errors[:when].any? %>
                     <span class="text-[#dc143c] text-[11px] font-semibold"><%= post.errors[:when].join("、") %></span>
                 <% end %>
             </div>
             <%= f.text_field :when,
                 placeholder: "例：子供の頃、新卒一年目の時",
+                data: { character_counter_target: "input", action: "input->character-counter#update" },
                 class: "w-full p-3 bg-[#f2eae1] border-none text-[#4a3b32] text-sm placeholder-[#b1a296] focus:ring-1 focus:ring-[#80351d] focus:outline-none rounded-sm"  %>
+            <!-- リアルタイムカウント処理 -->
+            <div class="text-right text-xs text-[#8e7e75] mt-1">
+                <span data-character-counter-target="count" class="font-medium">0</span> / <%= Post::MAX_WHEN_LENGTH %>文字
+            </div>
         </div>
         <!-- 画像選択 -->
         <div>
@@ -73,7 +81,7 @@
             </div>
         </div>
         <!-- エピソード入力欄（全体をdivで囲み、カウンター用のコントローラーを指定します） -->
-        <div class="space-y-2" data-controller="episode-counter" data-episode-counter-max-length-value="<%= Post::MAX_EPISODE_LENGTH %>">
+        <div class="space-y-2" data-controller="charactor-counter" data-charactor-counter-max-length-value="<%= Post::MAX_EPISODE_LENGTH %>">
             
             <!-- ラベルとインラインエラー表示 -->
             <div class="flex items-baseline justify-between pr-2 md:pr-5 mb-2">
@@ -84,16 +92,16 @@
             </div>
             
             <!-- 入力欄（文字が入力される「input」イベント時に、JSの「update」関数を動かす設定） -->
-            <%= f.text_area :episode, rows: 6, placeholder: "その料理にまつわる思い出を、自由に書いてください。", data: { episode_counter_target: "input", action: "input->episode-counter#update" }, class: "w-full p-4 bg-[#f2eae1] border-none text-[#4a3b32] text-sm leading-relaxed placeholder-[#b1a296] focus:ring-1 focus:ring-[#80351d] focus:outline-none resize-none rounded-sm" %>
+            <%= f.text_area :episode, rows: 6, placeholder: "その料理にまつわる思い出を、自由に書いてください。", data: { charactor_counter_target: "input", action: "input->charactor-counter#update" }, class: "w-full p-4 bg-[#f2eae1] border-none text-[#4a3b32] text-sm leading-relaxed placeholder-[#b1a296] focus:ring-1 focus:ring-[#80351d] focus:outline-none resize-none rounded-sm" %>
             
             <!-- 進捗バー（メーター） -->
             <div class="w-full h-1 bg-gray-200 rounded-full overflow-hidden">
-                <div data-episode-counter-target="progressBar" class="h-full bg-[#80351d] transition-all duration-150" style="width: 0%;"></div>
+                <div data-charactor-counter-target="progressBar" class="h-full bg-[#80351d] transition-all duration-150" style="width: 0%;"></div>
             </div>
 
             <!-- 文字数カウントの数字表示（右寄せ） -->
             <div class="text-right text-xs text-[#8e7e75]">
-                <span data-episode-counter-target="count" class="font-medium">0</span> / <%= Post::MAX_EPISODE_LENGTH %>文字
+                <span data-charactor-counter-target="count" class="font-medium">0</span> / <%= Post::MAX_EPISODE_LENGTH %>文字
             </div>
         </div>
     </div>
