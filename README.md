@@ -3,7 +3,7 @@
 自身の料理レシピをエピソードと一緒に投稿・閲覧ができるアプリです。
 
 ## デプロイ
-- Renderで公開予定
+- Renderで公開
 - URL: https://omoide-cook.onrender.com
 
 ## サービス概要
