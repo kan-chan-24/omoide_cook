@@ -10,7 +10,7 @@ class Post < ApplicationRecord
 
   # 料理名：空欄NG 外部キー（user）：空欄NG いつ頃：空欄NG エピソード：空欄NG：文字数制限
   MAX_EPISODE_LENGTH = 400
-  validates :title, presence: true, length: { maximum: 20 }
+  validates :title, presence: true, length: { maximum: 40 }
   validates :user_id, presence: true
   validates :when, presence: true, length: { maximum: 20 }
   validates :episode, presence: true, length: { maximum: MAX_EPISODE_LENGTH }
