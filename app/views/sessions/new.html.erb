@@ -10,13 +10,6 @@
     </h2>
   </div>
 
-  <!-- 💡 コントローラーで表示した flash.now[:alert] のエラーを表示します -->
-  <% if flash[:alert] %>
-    <div class="mb-6 p-3 bg-red-50 border border-red-200 text-[#dc143c] text-xs font-semibold rounded-sm">
-      <%= flash[:alert] %>
-    </div>
-  <% end %>
-
   <!-- ログインフォーム -->
   <!-- 特定のモデル（@user）を保存するわけではないので scope: :session を指定 -->
   <%= form_with scope: :session, url: login_path, class: "space-y-6" do |f| %>

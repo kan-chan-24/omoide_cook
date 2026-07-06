@@ -1,0 +1,6 @@
+<!-- id="flash-messages" が「通知表示エリア」の目印（ここを狙ってTurboStreamから通知を差し込む -->
+<div id="flash-messages" class="fixed top-20 right-10 md:right-30 z-[100] flex flex-col items-end gap-2 pointer-events-none">
+  <% flash.each do |type, message| %>
+    <%= render "shared/flash_message", type: type, message: message %>
+  <% end %>
+</div>
