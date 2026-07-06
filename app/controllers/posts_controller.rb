@@ -39,7 +39,9 @@ class PostsController < ApplicationController
             turbo_stream.update("post_form", template: "posts/new"),
 
             # 保存成功時のみ、post_form_controller.jsの closeModal を実行してモーダルを閉じる
-            turbo_stream.action(:close_modal, "[data-controller='post-form']")
+            turbo_stream.action(:close_modal, "[data-controller='post-form']"),
+            # flash-messageをapplication.html.erbの通知枠へ差し込む
+            turbo_stream.append("flash-messages", partial: "shared/flash_message", locals: { type: "notice", message: "投稿を作成しました。" })
           ]
         end
         # 通常のページ遷移を伴う通信がきた場合、ページ全体をリダイレクトする（保険的な措置）
@@ -77,7 +79,9 @@ class PostsController < ApplicationController
             # 詳細モーダルの中身を、新しく更新された「show」のHTMLで丸ごと上書き（置換）する
             turbo_stream.replace("modal_content", template: "posts/show", locals: { post: @post }),
             # 一覧画面のカードも最新の内容にパッと置き換える（dom_idで正確に狙い撃ち）
-            turbo_stream.replace(helpers.dom_id(@post), partial: "posts/post", locals: { post: @post })
+            turbo_stream.replace(helpers.dom_id(@post), partial: "posts/post", locals: { post: @post }),
+            # flash-messageをapplication.html.erbの通知枠へ差し込む
+            turbo_stream.append("flash-messages", partial: "shared/flash_message", locals: { type: "notice", message: "更新しました。" })
           ]
         }
         # 本番環境のTurboのために、リダイレクトには status: :see_other を付ける
@@ -100,7 +104,9 @@ class PostsController < ApplicationController
           # ① 一覧画面（DOM）から、削除された投稿のカードを消し去る
           turbo_stream.remove(@post),
           # ② JavaScript側へ「モーダルを閉じてね」というカスタムイベントを通知
-          turbo_stream.action(:close_modal_for_destroy, "")
+          turbo_stream.action(:close_modal_for_destroy, ""),
+          # flash-messageをapplication.html.erbの通知枠へ差し込む
+          turbo_stream.append("flash-messages", partial: "shared/flash_message", locals: { type: "notice", message: "削除しました。" })
         ]
       }
       # 万が一Turboが動かなかったときのフォールバック（保険）
