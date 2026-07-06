@@ -4,7 +4,7 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
     // 外部（HTMLのデータ属性）から表示時間をカスタマイズできるように設定
     // デフォルトは3000ミリ秒（3秒）
-    static values = { duration: { type: Number, default: 3000 } }
+    static values = { duration: { type: Number, default: 120000 } }
 
     // 初期化処理
     connect() {
