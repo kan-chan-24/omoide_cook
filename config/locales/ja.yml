@@ -4,6 +4,8 @@ ja:
     messages:
       blank: "入力してください"
       too_long: "%{count}文字以内で入力してください"
+      too_short: "%{count}文字以上で入力してください"
+      confirmation: "正しい内容を入力してください"
   
   activerecord:
     attributes:
@@ -13,3 +15,5 @@ ja:
         episode: "エピソード"
         ingredients: "材料"
         steps: "作り方"
+      user:
+        password: "パスワード"
