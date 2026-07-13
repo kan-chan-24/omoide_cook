@@ -12,12 +12,8 @@
         <% if post.image.attached? %>
             <!-- cl_image_tag: Cloudinary専用のimgタグ生成ヘルパー -->
             <!-- fetch_format: :autoでHEICなどもブラウザが表示できる形式へ自動変換 -->
-            <%= cl_image_tag post.image.key,
-              fetch_format: :auto,
-              quality: :auto,
-              crop: :fill,
-              width: 600,
-              height: 338,
+            <%= post_image_tag post.image,
+              transform: { crop: :fill, width: 600, height: 338 },
               class: "brightness-95 w-full h-full object-cover" %>
         <% else %>
           <!-- 料理名の文字数から、1〜3の数字を自動計算する -->
