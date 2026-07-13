@@ -56,25 +56,31 @@
         </div>
         <!-- 画像選択 -->
         <div>
-            <%= f.label :image, "料理の写真", class: "block text-xs text-[#8e7e75] mb-2 font-medium" %>
+            <!-- ラベルとエラー表示を横並びに表示 -->
+            <div class="flex items-baseline justify-between pr-2 md:pr-5 mb-2">
+                <%= f.label :image, "料理の写真", class: "block text-xs text-[#8e7e75] font-medium" %>
+                <!-- image に紐づくバリデーションエラーがあれば表示 -->
+                <% if post.errors[:image].any? %>
+                    <span class="text-[#dc143c] text-[11px] font-semibold"><%= post.errors[:image].join("、") %></span>
+                <% end %>
+            </div>
             <div class="relative flex items-center justify-center w-full p-4 bg-[#f2eae1] rounded-sm cursor-pointer hover:bg-[#ebdcd0] transition-colors group">
-                
-                <!-- id, onchange を削除。action と target を追加 -->
-                <%= f.file_field :image, 
-                    data: { 
+
+                <%= f.file_field :image,
+                    accept: "image/jpeg,image/png,image/webp,image/heic,image/heif",
+                    data: {
                     action: "change->post-form#updateFileName",
                     post_form_target: "fileInput",
-                    attached_name: (f.object.image.attached? ? f.object.image.filename.to_s : nil) 
-                    }, 
+                    attached_name: (f.object.image.attached? ? f.object.image.filename.to_s : nil)
+                    },
                     class: "absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" %>
-                    
+
                 <div class="text-center pointer-events-none">
-                    <!-- id を削除。target を追加 -->
                     <span data-post-form-target="fileNameDisplay" class="text-sm text-[#8e7e75] group-hover:text-[#4a3b32] break-all px-4 block">
                         <% if f.object.image.attached? %>
                             <%= f.object.image.filename.to_s %>
                         <% else %>
-                            画像を選択する
+                            写真を選ぶ
                         <% end %>
                     </span>
                 </div>
