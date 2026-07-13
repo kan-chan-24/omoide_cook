@@ -6,7 +6,9 @@
     <!-- 📸 料理の写真（常に詳細の「一番上」に配置） -->
     <div class="relative w-full aspect-video bg-[#f2eae1] overflow-hidden">
       <% if @post.image.attached? %>
-        <%= image_tag @post.image, class: "brightness-95 w-full h-full object-cover" %>
+        <%= post_image_tag @post.image,
+          transform: { crop: :fill, width: 800, height: 450 },
+          class: "brightness-95 w-full h-full object-cover" %>
       <% else %>
         <!-- 一覧画面と同じ、料理名から1〜3の数字を自動計算するロジック -->
         <% image_index = (@post.title.hash % 3).abs + 1 %>
