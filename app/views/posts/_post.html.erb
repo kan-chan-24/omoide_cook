@@ -10,7 +10,15 @@
     <!-- カード上部：画像部分 -->
     <div class="relative aspect-video overflow-hidden">
         <% if post.image.attached? %>
-            <%= image_tag post.image, class: "brightness-95 w-full h-full object-cover" %>
+            <!-- cl_image_tag: Cloudinary専用のimgタグ生成ヘルパー -->
+            <!-- fetch_format: :autoでHEICなどもブラウザが表示できる形式へ自動変換 -->
+            <%= cl_image_tag post.image.key,
+              fetch_format: :auto,
+              quality: :auto,
+              crop: :fill,
+              width: 600,
+              height: 338,
+              class: "brightness-95 w-full h-full object-cover" %>
         <% else %>
           <!-- 料理名の文字数から、1〜3の数字を自動計算する -->
           <% image_index = (post.title.hash % 3).abs + 1 %>
